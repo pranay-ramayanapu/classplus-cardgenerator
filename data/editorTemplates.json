@@ -1,0 +1,114 @@
+[
+  {
+    "id": "birthday-sunrise",
+    "title": "Sunrise Surprise",
+    "image": "/templates/birthday-sunrise.svg",
+    "premium": false,
+    "textPosition": {
+      "top": "78%",
+      "left": "10%"
+    },
+    "profilePosition": {
+      "top": "10%",
+      "left": "10%"
+    }
+  },
+  {
+    "id": "birthday-confetti",
+    "title": "Confetti Glow",
+    "image": "/templates/birthday-confetti.svg",
+    "premium": true,
+    "textPosition": {
+      "top": "16%",
+      "left": "50%"
+    },
+    "profilePosition": {
+      "top": "70%",
+      "left": "18%"
+    }
+  },
+  {
+    "id": "anniversary-gold",
+    "title": "Golden Years",
+    "image": "/templates/anniversary-gold.svg",
+    "premium": true,
+    "textPosition": {
+      "top": "12%",
+      "left": "10%"
+    },
+    "profilePosition": {
+      "top": "72%",
+      "left": "74%"
+    }
+  },
+  {
+    "id": "anniversary-velvet",
+    "title": "Velvet Promise",
+    "image": "/templates/anniversary-velvet.svg",
+    "premium": false,
+    "textPosition": {
+      "top": "76%",
+      "left": "78%"
+    },
+    "profilePosition": {
+      "top": "12%",
+      "left": "18%"
+    }
+  },
+  {
+    "id": "festival-lights",
+    "title": "Festival Lights",
+    "image": "/templates/festival-lights.svg",
+    "premium": false,
+    "textPosition": {
+      "top": "70%",
+      "left": "50%"
+    },
+    "profilePosition": {
+      "top": "8%",
+      "left": "72%"
+    }
+  },
+  {
+    "id": "festival-rangoli",
+    "title": "Rangoli Radiance",
+    "image": "/templates/festival-rangoli.svg",
+    "premium": true,
+    "textPosition": {
+      "top": "84%",
+      "left": "50%"
+    },
+    "profilePosition": {
+      "top": "18%",
+      "left": "72%"
+    }
+  },
+  {
+    "id": "friendship-sunshine",
+    "title": "Sunshine Squad",
+    "image": "/templates/friendship-sunshine.svg",
+    "premium": false,
+    "textPosition": {
+      "top": "16%",
+      "left": "74%"
+    },
+    "profilePosition": {
+      "top": "76%",
+      "left": "16%"
+    }
+  },
+  {
+    "id": "friendship-roadtrip",
+    "title": "Road Trip Vibes",
+    "image": "/templates/friendship-roadtrip.svg",
+    "premium": true,
+    "textPosition": {
+      "top": "48%",
+      "left": "50%"
+    },
+    "profilePosition": {
+      "top": "10%",
+      "left": "10%"
+    }
+  }
+]

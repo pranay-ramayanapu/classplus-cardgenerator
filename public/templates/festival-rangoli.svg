@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Festival Rangoli">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" rx="48" fill="url(#g)"/>
+  <circle cx="400" cy="440" r="180" fill="none" stroke="#fb7185" stroke-width="30" opacity="0.9"/>
+  <circle cx="400" cy="440" r="130" fill="none" stroke="#fbbf24" stroke-width="18" opacity="0.9"/>
+  <circle cx="400" cy="440" r="80" fill="#f8fafc" opacity="0.95"/>
+  <text x="60" y="860" font-family="Arial, sans-serif" font-size="72" font-weight="700" fill="#fef3c7">Rangoli Radiance</text>
+</svg>

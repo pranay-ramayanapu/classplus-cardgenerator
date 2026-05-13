@@ -1,0 +1,74 @@
+[
+  {
+    "id": "birthday-sunrise",
+    "title": "Sunrise Surprise",
+    "image": "/templates/birthday-sunrise.svg",
+    "premium": false,
+    "category": "Birthday",
+    "textPosition": "bottom-left",
+    "profilePosition": "top-right"
+  },
+  {
+    "id": "birthday-confetti",
+    "title": "Confetti Glow",
+    "image": "/templates/birthday-confetti.svg",
+    "premium": true,
+    "category": "Birthday",
+    "textPosition": "center",
+    "profilePosition": "bottom-left"
+  },
+  {
+    "id": "anniversary-gold",
+    "title": "Golden Years",
+    "image": "/templates/anniversary-gold.svg",
+    "premium": true,
+    "category": "Anniversary",
+    "textPosition": "top-left",
+    "profilePosition": "bottom-right"
+  },
+  {
+    "id": "anniversary-velvet",
+    "title": "Velvet Promise",
+    "image": "/templates/anniversary-velvet.svg",
+    "premium": false,
+    "category": "Anniversary",
+    "textPosition": "bottom-right",
+    "profilePosition": "top-left"
+  },
+  {
+    "id": "festival-lights",
+    "title": "Festival Lights",
+    "image": "/templates/festival-lights.svg",
+    "premium": false,
+    "category": "Festivals",
+    "textPosition": "center",
+    "profilePosition": "top-right"
+  },
+  {
+    "id": "festival-rangoli",
+    "title": "Rangoli Radiance",
+    "image": "/templates/festival-rangoli.svg",
+    "premium": true,
+    "category": "Festivals",
+    "textPosition": "bottom-left",
+    "profilePosition": "bottom-right"
+  },
+  {
+    "id": "friendship-sunshine",
+    "title": "Sunshine Squad",
+    "image": "/templates/friendship-sunshine.svg",
+    "premium": false,
+    "category": "Friendship",
+    "textPosition": "top-right",
+    "profilePosition": "bottom-left"
+  },
+  {
+    "id": "friendship-roadtrip",
+    "title": "Road Trip Vibes",
+    "image": "/templates/friendship-roadtrip.svg",
+    "premium": true,
+    "category": "Friendship",
+    "textPosition": "center",
+    "profilePosition": "top-left"
+  }
+]

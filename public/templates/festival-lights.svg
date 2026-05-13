@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Festival Lights">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#155e75"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" rx="48" fill="url(#g)"/>
+  <g fill="none" stroke="#fbbf24" stroke-width="10" stroke-linecap="round">
+    <path d="M100 230 Q400 40 700 230"/>
+    <path d="M120 260 Q400 80 680 260" opacity="0.75"/>
+  </g>
+  <g>
+    <circle cx="150" cy="210" r="18" fill="#f472b6"/>
+    <circle cx="250" cy="160" r="18" fill="#22d3ee"/>
+    <circle cx="350" cy="120" r="18" fill="#fde047"/>
+    <circle cx="450" cy="110" r="18" fill="#34d399"/>
+    <circle cx="550" cy="150" r="18" fill="#fb7185"/>
+    <circle cx="650" cy="210" r="18" fill="#a78bfa"/>
+  </g>
+  <text x="60" y="860" font-family="Arial, sans-serif" font-size="72" font-weight="700" fill="#e0f2fe">Festival Lights</text>
+</svg>

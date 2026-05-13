@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Anniversary Gold">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#a16207"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" rx="48" fill="url(#g)"/>
+  <circle cx="400" cy="330" r="160" fill="none" stroke="#fbbf24" stroke-width="24" opacity="0.9"/>
+  <circle cx="400" cy="330" r="115" fill="none" stroke="#fde68a" stroke-width="12" opacity="0.8"/>
+  <text x="60" y="860" font-family="Arial, sans-serif" font-size="72" font-weight="700" fill="#fff7ed">Golden Years</text>
+</svg>
