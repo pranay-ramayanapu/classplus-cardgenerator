@@ -5,7 +5,13 @@ import { useSearchParams } from "next/navigation";
 import templates from "@/data/editorTemplates.json";
 import PositionChip from "@/components/PositionChip";
 import PremiumModal from "@/components/PremiumModal";
-import { captureCardAsPng, shareCardImage } from "@/lib/cardExport";
+import {
+  captureCardAsPng,
+  copyBlobToClipboard,
+  downloadBlobAsPng,
+  renderCardToBlob,
+  shareBlobImage,
+} from "@/lib/cardExport";
 
 export default function EditorPage() {
   const searchParams = useSearchParams();
@@ -17,6 +23,8 @@ export default function EditorPage() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [premiumOpen, setPremiumOpen] = useState(false);
+  const [shareBlob, setShareBlob] = useState(null);
+  const [shareFallbackOpen, setShareFallbackOpen] = useState(false);
 
   const activeTemplate = useMemo(
     () => templates.find((template) => template.id === activeTemplateId) || templates[0],
@@ -41,6 +49,28 @@ export default function EditorPage() {
 
     setActiveTemplateId(requestedTemplate.id);
   }, [freeFallback.id, searchParams]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    setShareBlob(null);
+
+    renderCardToBlob({ template: activeTemplate, userName, profileImage })
+      .then((blob) => {
+        if (!cancelled) {
+          setShareBlob(blob);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setShareBlob(null);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeTemplate, profileImage, userName]);
 
   function handleProfileUpload(event) {
     const file = event.target.files?.[0];
@@ -98,19 +128,61 @@ export default function EditorPage() {
     setError("");
 
     try {
-      const result = await shareCardImage({ template: activeTemplate, userName, profileImage }, `${activeTemplate.title} greeting card`);
+      if (!shareBlob) {
+        throw new Error("Preparing the image. Try again in a moment.");
+      }
+
+      const result = await shareBlobImage(shareBlob, `${activeTemplate.title} greeting card`);
 
       if (result?.mode === "share") {
+        setShareFallbackOpen(false);
         setMessage("Native share sheet opened. Pick WhatsApp, Instagram, Email, or another app on your device.");
         return;
       }
 
-      setMessage("Native share sheet opened.");
+      setShareFallbackOpen(true);
+      setMessage("Your browser does not expose the native share sheet here, so I opened a fallback share panel.");
     } catch (err) {
-      setError(err?.message || "Unable to open the native share sheet on this browser/device.");
+      setShareFallbackOpen(true);
+      setMessage("Your browser does not expose the native share sheet here, so I opened a fallback share panel.");
+      setError(err?.message || "");
     } finally {
       setSharing(false);
     }
+  }
+
+  async function handleCopyImage() {
+    if (!shareBlob) {
+      return;
+    }
+
+    try {
+      await copyBlobToClipboard(shareBlob);
+      setMessage("Image copied to clipboard. Paste it into WhatsApp, Messages, Mail, or any app that accepts pasted images.");
+      setError("");
+    } catch (err) {
+      setError(err?.message || "Unable to copy the image to clipboard.");
+    }
+  }
+
+  function handleDownloadFromSharePanel() {
+    if (!shareBlob) {
+      return;
+    }
+
+    downloadBlobAsPng(shareBlob, `${activeTemplate.title.replace(/\s+/g, "-").toLowerCase()}.png`);
+    setMessage("Downloaded the image. You can attach it manually from your files.");
+    setError("");
+  }
+
+  function handlePreviewImage() {
+    if (!shareBlob) {
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(shareBlob);
+    window.open(previewUrl, "_blank", "noopener,noreferrer");
+    setTimeout(() => URL.revokeObjectURL(previewUrl), 5000);
   }
 
   const templateGroups = [
@@ -138,6 +210,67 @@ export default function EditorPage() {
         onUpgrade={() => setMessage("Premium checkout is not connected yet.")}
         onContinueFree={handleContinueFree}
       />
+
+      {shareFallbackOpen ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 px-4 py-6 backdrop-blur-sm">
+          <div className="w-full max-w-lg rounded-[2rem] border border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-800 dark:bg-slate-950">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-sky-600 dark:text-sky-400">
+                  Share options
+                </p>
+                <h2 className="mt-2 font-display text-2xl font-semibold text-slate-950 dark:text-white">
+                  Native share is unavailable here
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                  Use one of these options to send or save the card anyway.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShareFallbackOpen(false)}
+                className="rounded-full border border-slate-200 px-3 py-1 text-sm text-slate-600 transition hover:border-slate-300 hover:text-slate-950 dark:border-slate-800 dark:text-slate-300 dark:hover:text-white"
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={handleCopyImage}
+                disabled={!shareBlob}
+                className="inline-flex items-center justify-center rounded-full bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
+              >
+                Copy image
+              </button>
+              <button
+                type="button"
+                onClick={handleDownloadFromSharePanel}
+                disabled={!shareBlob}
+                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-70 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-700 dark:hover:text-white"
+              >
+                Download PNG
+              </button>
+              <button
+                type="button"
+                onClick={handlePreviewImage}
+                disabled={!shareBlob}
+                className="inline-flex items-center justify-center rounded-full border border-sky-200 bg-sky-50 px-4 py-3 text-sm font-semibold text-sky-700 transition hover:border-sky-300 hover:bg-sky-100 disabled:cursor-not-allowed disabled:opacity-70 dark:border-sky-900/60 dark:bg-sky-950/30 dark:text-sky-300 dark:hover:bg-sky-950/50"
+              >
+                Open image preview
+              </button>
+              <button
+                type="button"
+                onClick={() => setShareFallbackOpen(false)}
+                className="inline-flex items-center justify-center rounded-full border border-transparent bg-transparent px-4 py-3 text-sm font-semibold text-slate-500 transition hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+              >
+                Keep editing
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <section className="rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-soft backdrop-blur dark:border-slate-800 dark:bg-slate-950/80 sm:p-8">
@@ -226,10 +359,10 @@ export default function EditorPage() {
               <button
                 type="button"
                 onClick={handleShare}
-                disabled={exporting || sharing}
+                disabled={exporting || sharing || !shareBlob}
                 className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:border-slate-300 hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-70 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-700 dark:hover:text-white"
               >
-                {sharing ? "Preparing share..." : "Share"}
+                {sharing ? "Preparing share..." : !shareBlob ? "Preparing image..." : "Share"}
               </button>
           </div>
 
