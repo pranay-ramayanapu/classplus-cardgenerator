@@ -104,17 +104,9 @@ Add screenshots for these views:
 - Greeting card editor preview
 ![Greeting card editor preview](screenshots/cardeditor.png)
 - Premium subscription popup
-![Premium subscription popup](screenshots/premiumsub.png.png)
+![Premium subscription popup](screenshots/premiumsub.png)
 - PNG export state
-![PNG export state](screenshots/pngexport.png.png)
-
-## Deployment Instructions
-
-- Push the project to your Git provider.
-- Add the Firebase environment variables in your deployment platform.
-- Deploy the Next.js app to Vercel or another Node.js hosting provider.
-- Confirm the Firebase Authentication providers are enabled in production.
-- Review Firestore security rules before shipping.
+![PNG export state](screenshots/pngexport.png)
 
 ## Future Improvements
 
